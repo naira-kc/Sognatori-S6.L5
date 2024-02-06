@@ -7,6 +7,10 @@ try:
 except Exception as e:
     print("Si è verificato un errore durante il caricamento del file Excel:", e)
 
+# Rimuovi la colonna senza nome (prova inizio pulizia= ANDATA!!! YES!)
+if 'Unnamed: 1' in df_comuni_data.columns:
+    df_comuni_data.drop(columns=['Unnamed: 1'], inplace=True)
+
 # Visualizza informazioni sul DataFrame prima della pulizia
 print("Informazioni sul DataFrame prima della pulizia:")
 print(df_comuni_data.info())
