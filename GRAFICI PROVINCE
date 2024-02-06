@@ -1,0 +1,12 @@
+df_messo_bene["Date"] = pd.to_datetime(df_messo_bene["Date"])
+df_messo_bene["mese"] = df_messo_bene["Date"].dt.month
+casi_per_mese = df_messo_bene.groupby("mese")["TotalPositiveCases"].sum()
+plt.plot(casi_per_mese.index, casi_per_mese.values, marker="o")
+plt.title("Casi per mese")
+plt.xticks(range(1,13))
+plt.xlabel("Mesi")
+plt.ylabel("quantità di casi")
+
+indice = df_messo_bene.groupby("RegionName")["TotalPositiveCases"].idxmax()
+provincia_conpiucasi = df_messo_bene.loc[indice]
+provincia_conpiucasi
