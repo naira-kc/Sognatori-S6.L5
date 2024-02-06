@@ -13,7 +13,7 @@ dati_raggruppati = dati_raggruppati.sort_values(by="TotalPositiveCases_normalize
 
 #Creiamo il grafico
 sns.barplot(x="RegionName", y="TotalPositiveCases_normalized", data=dati_raggruppati, color="#82c89f")
-plt.title('Casi positivi registrati')
+plt.title('Casi positivi registrati (Normalizzati)')
 plt.xlabel('Casi positivi')
 plt.ylabel('Totale')
 plt.xticks(rotation=45, ha = "right")
