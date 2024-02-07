@@ -1,0 +1,37 @@
+
+df_regioni_divisi2011 = df_comuni.groupby('Regione')['Popolazione2011'].sum().reset_index()
+
+# Stampa il DataFrame delle regioni
+print(df_regioni_divisi2011)
+
+df_regioni2023 = pd.read_excel('Popolazione_Italia_2023.xlsx')
+# Rinominiamo le colonne del DataFrame popolazione_2023
+popolazione2023 = df_regioni2023.rename(columns={'Territorio': 'Regione', 'Value': 'Popolazione2023'})
+print(popolazione2023)
+# Uniamo i due DataFrame sulla colonna 'Denominazione'
+popolazione_completa = pd.merge(df_regioni_divisi2011, popolazione2023, on='Regione')
+# Normalizzazione min-max per le colonne di popolazione
+popolazione_completa['Popolazione2011'] = (popolazione_completa['Popolazione2011'] - popolazione_completa['Popolazione2011'].min()) / (popolazione_completa['Popolazione2011'].max() - popolazione_completa['Popolazione2011'].min())
+popolazione_completa['Popolazione2023'] = (popolazione_completa['Popolazione2023'] - popolazione_completa['Popolazione2023'].min()) / (popolazione_completa['Popolazione2023'].max() - popolazione_completa['Popolazione2023'].min())
+
+# Creiamo il grafico di confronto normalizzato
+plt.figure(figsize=(10, 5))
+
+# Impostazione delle larghezze delle barre
+bar_width = 0.35
+
+# Grafico a barre per la Popolazione 2011
+plt.bar(popolazione_completa.index, popolazione_completa['Popolazione2011'], bar_width, label='Popolazione 2011')
+
+# Grafico a barre per la Popolazione 2023 posizionato accanto al primo
+plt.bar(popolazione_completa.index + bar_width, popolazione_completa['Popolazione2023'], bar_width, label='Popolazione 2023')
+
+# Etichette sugli assi e titolo del grafico
+plt.xlabel('Regione')
+plt.ylabel('Popolazione')
+plt.title('Confronto Popolazione 2011 vs 2023 per Regione')
+plt.xticks(popolazione_completa.index + bar_width / 2, popolazione_completa['Regione'], rotation=45)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
