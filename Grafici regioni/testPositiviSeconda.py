@@ -2,11 +2,10 @@ import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 
-
 file = "regioniPulite.csv"
 df = pd.read_csv(file)
 
-# L'intervallo di date è riferito ai primi due mesi
+# L'intervallo di date è riferito agli ultimi due mesi
 inizio = "2020-10-01"
 fine = "2020-12-06"
 
@@ -19,7 +18,6 @@ dati_raggruppati = dati_filtrati.groupby('RegionName')[['Test','TotalPositiveCas
 #Li ordino
 dati_raggruppati = dati_raggruppati.sort_values(by="Test", ascending=False)
 
-plt.figure(figsize=(10, 6))
 sns.barplot(x="RegionName", y="Test", data=dati_raggruppati, color="#82c89f", label="Test Eseguiti")
 sns.barplot(x="RegionName", y="TotalPositiveCases", data=dati_raggruppati, color="#ff7f0e", label="Positivi ", alpha = 0.5)
 plt.title('Numero di tamponi eseguiti per regione nella seconda fase(set-dec)')
