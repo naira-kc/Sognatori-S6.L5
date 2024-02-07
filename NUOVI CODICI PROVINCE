@@ -1,0 +1,39 @@
+# casi per province
+Casi_per_provincia = df_messo_bene.groupby("ProvinceName")["TotalPositiveCases"].sum()
+
+piu_casi = Casi_per_provincia.idxmax()
+
+meno_casi = Casi_per_provincia.idxmin()
+
+massimo = Casi_per_provincia.max()
+minimo = Casi_per_provincia.min()
+
+# vedere quante volte Vibo Valentia ha avuto 0 casi al giorno
+zero_casi = df_messo_bene[df_messo_bene["ProvinceName"] == "Vibo Valentia"]["TotalPositiveCases"].eq(0).sum()
+
+# capire quanti casi ha avuto roma in totale
+Roma = df_messo_bene[df_messo_bene["ProvinceName"] == "Roma"]["TotalPositiveCases"].sum()
+Roma
+
+# totale dei casi per provincia nei primi 6 mesi
+df_messo_bene["Date"] = pd.to_datetime(df_messo_bene["Date"])
+primi_sei = df_messo_bene[df_messo_bene["Date"].dt.month <= 6]
+primi_sei_province = primi_sei.groupby("ProvinceName")["TotalPositiveCases"].sum()
+primi_sei_province
+
+massimo_primisei = primi_sei_province.idxmax()
+
+# capire totale casi ultimi 6 mesi
+df_messo_bene["Date"] = pd.to_datetime(df_messo_bene["Date"])
+altri_sei = df_messo_bene[df_messo_bene["Date"].dt.month > 6]
+altri_sei_province = altri_sei.groupby("ProvinceName")["TotalPositiveCases"].sum()
+altri_sei_province
+
+piu_casi_altri_sei = altri_sei_province.idxmax()
+
+# provincia con più casi ogni mese
+df_messo_bene["Date"] = pd.to_datetime(df_messo_bene["Date"])
+df_messo_bene["Mese"] = df_messo_bene["Date"].dt.month
+piu_casi_mese = df_messo_bene.groupby(["Mese", "ProvinceName"])["TotalPositiveCases"].sum()
+provincia_con_piu_casi = piu_casi_mese.groupby("Mese").idxmax()
+
