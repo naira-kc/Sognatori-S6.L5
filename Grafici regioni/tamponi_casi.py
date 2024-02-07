@@ -1,18 +1,18 @@
+#Definisco funzione min max
+def min_max(data):
+    min_value = data.min()
+    max_value = data.max()
+    return (data - min_value) / (max_value - min_value)
+   
 #Raggruppamento dei valori per data
-d1 = dati.groupby('Date')[["TotalPositiveCases", "Test"]].mean()
+d1 = dati.groupby('Date')[["NewPositiveCases", "Test"]].sum()
 
-# Normalizzare i dati TotalPositiveCases
-min_value = d1["TotalPositiveCases"].min()
-max_value = d1["TotalPositiveCases"].max()
-d1["TotalPositiveCases_normalized"] = (d1["TotalPositiveCases"] - min_value) / (max_value - min_value)
+#Faccio la standardizzazione min max sulle colonne interessate
+d1[['NewPositiveCases','Test']] = min_max(d1[['NewPositiveCases','Test']])
 
-# Normalizzare i dati Test
-min_value = d1["Test"].min()
-max_value = d1["Test"].max()
-d1["Test_normalized"] = (d1["Test"] - min_value) / (max_value - min_value)
-
-#Creazione grafico
-sns.lineplot(data = d1[["TotalPositiveCases_normalized","Test_normalized"]], palette="tab10", linewidth=2.5)
+#stampo il grafico
+print(d1)
+sns.lineplot(data = d1[["NewPositiveCases","Test"]], palette="tab10", linewidth=1.5)
 plt.title('Valori normalizzati')
-plt.legend(['Casi totali', 'Tamponi'])
+plt.legend(labels = ['Positivi','Tamponi'])
 plt.show()
