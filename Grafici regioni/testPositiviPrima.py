@@ -18,7 +18,6 @@ dati_raggruppati = dati_filtrati.groupby('RegionName')[['Test','TotalPositiveCas
 #Li ordino
 dati_raggruppati = dati_raggruppati.sort_values(by="Test", ascending=False)
 
-plt.figure(figsize=(10, 6))
 sns.barplot(x="RegionName", y="Test", data=dati_raggruppati, color="#82c89f", label="Test Eseguiti")
 sns.barplot(x="RegionName", y="TotalPositiveCases", data=dati_raggruppati, color="#ff7f0e", label="Positivi ", alpha = 0.5)
 plt.title('Numero di tamponi eseguiti per regione nella prima fase(feb-apr)')
