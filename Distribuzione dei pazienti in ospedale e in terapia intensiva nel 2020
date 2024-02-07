@@ -1,0 +1,20 @@
+# Calcolo la somma delle colonne 'In ospedale' e 'Ter_intensiva'
+total_in_ospedale = Regioni['In ospedale'].sum()
+total_ter_intensiva = Regioni['Ter_intensiva'].sum()
+
+# Creo una lista con i totali
+totals = [total_in_ospedale, total_ter_intensiva]
+
+# Creo le etichette per le fette del grafico a torta
+labels = ['In ospedale', 'Ter_intensiva']
+
+# Creo il grafico a torta
+plt.figure(figsize=(8, 6))
+plt.pie(totals, labels=labels, autopct='%1.1f%%', startangle=140)
+
+# Impostazione del titolo del grafico
+plt.title('Distribuzione dei pazienti in ospedale e in terapia intensiva nel 2020')
+
+# Visualizzazione del grafico
+plt.axis('equal')  # Assicura che il grafico sia disegnato come un cerchio
+plt.show()
